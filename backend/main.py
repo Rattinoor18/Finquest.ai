@@ -37,7 +37,7 @@ def root():
         "tagline": "Learn Money by Managing Money",
         "status": "online",
         "version": "2.0.0",
-        "gemini_configured": bool(os.getenv("GEMINI_API_KEY") and os.getenv("GEMINI_API_KEY") != "your_gemini_api_key_here")
+        "gemini_configured": bool(os.getenv("GEMINI_API_KEY") and os.getenv("GEMINI_API_KEY") != AQ.Ab8RN6LuxpM6LCYGjGABUugKyliWCc6QjgjCV5Hya8Vw9F-4sA)
     }
 
 # 1. Market Endpoints
