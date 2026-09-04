@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config';
 import { 
   TrendingUp, 
   TrendingDown, 
@@ -82,25 +83,30 @@ export const PaperTradingPage: React.FC = () => {
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const [orderBook, setOrderBook] = useState<{ bids: OrderBookLevel[]; asks: OrderBookLevel[] }>({ bids: [], asks: [] });
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   // Fetch Quotes and Portfolio
   const fetchMarketData = async () => {
     try {
-      const res = await fetch('/api/market/quotes');
+      const res = await fetch(`${API_BASE_URL}/api/market/quotes`);
       if (res.ok) {
         const data = await res.json();
         setQuotes(data);
+        setError(null);
+      } else {
+        setError(`API Error: ${res.status}`);
       }
       
-      const portRes = await fetch('/api/portfolio');
+      const portRes = await fetch(`${API_BASE_URL}/api/portfolio`);
       if (portRes.ok) {
         const portData = await portRes.json();
         setCashBalance(portData.cash_balance);
         setPositions(portData.positions);
         setRealizedPnl(portData.total_realized_pnl);
       }
-    } catch (e) {
+    } catch (e: any) {
       console.warn("Backend offline or unreachable. Using client-side simulation tick.");
+      setError("Cannot connect to market data server. Please check your connection.");
     } finally {
       setLoading(false);
     }
@@ -108,7 +114,7 @@ export const PaperTradingPage: React.FC = () => {
 
   const fetchOrderBook = async (sym: string) => {
     try {
-      const res = await fetch(`/api/market/orderbook/${sym}`);
+      const res = await fetch(`${API_BASE_URL}/api/market/orderbook/${sym}`);
       if (res.ok) {
         const data = await res.json();
         setOrderBook({ bids: data.bids || [], asks: data.asks || [] });
@@ -157,7 +163,7 @@ export const PaperTradingPage: React.FC = () => {
     };
 
     try {
-      const res = await fetch('/api/trade/order', {
+      const res = await fetch(`${API_BASE_URL}/api/trade/order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -221,7 +227,7 @@ export const PaperTradingPage: React.FC = () => {
   const handleRegimeChange = async (reg: string) => {
     setMarketRegime(reg);
     try {
-      await fetch(`/api/market/regime/${reg}`, { method: 'POST' });
+      await fetch(`${API_BASE_URL}/api/market/regime/${reg}`, { method: 'POST' });
     } catch (e) {
       console.log("Regime changed locally");
     }
@@ -443,8 +449,15 @@ export const PaperTradingPage: React.FC = () => {
                   </AreaChart>
                 </ResponsiveContainer>
               ) : (
-                <div className="h-full flex items-center justify-center text-xs text-[var(--text-muted)] font-mono">
-                  Loading chart ticks...
+                <div className="h-full flex flex-col items-center justify-center text-xs text-[var(--text-muted)] font-mono text-center p-4">
+                  {error ? (
+                    <>
+                      <ShieldAlert className="w-8 h-8 text-red-500 mb-2 opacity-80" />
+                      <span className="text-red-400">{error}</span>
+                    </>
+                  ) : (
+                    "Loading chart ticks..."
+                  )}
                 </div>
               )}
             </div>

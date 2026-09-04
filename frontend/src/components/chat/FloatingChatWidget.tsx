@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { API_BASE_URL } from '../../config';
 import { Bot, X, Send, Sparkles, AlertCircle, RefreshCw, MessageSquare } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -45,7 +46,7 @@ export const FloatingChatWidget: React.FC = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/chat', {
+      const response = await fetch(`${API_BASE_URL}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

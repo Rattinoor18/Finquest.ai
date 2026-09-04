@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { API_BASE_URL } from '../config';
 import { Bot, Send, Sparkles, AlertCircle, RefreshCw, User } from 'lucide-react';
 
 interface Message {
@@ -41,7 +42,7 @@ export const ChatPage: React.FC = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/chat', {
+      const response = await fetch(`${API_BASE_URL}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
