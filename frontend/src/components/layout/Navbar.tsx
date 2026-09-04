@@ -57,7 +57,7 @@ export const Navbar: React.FC = () => {
     { to: '/course', label: 'Course', badge: `${progressPct}%` },
     { to: '/trading', label: 'Paper Trading', badge: 'Live Sim' },
     { to: '/tools', label: 'Tools' },
-    { to: '/chat', label: 'Aurelius AI', icon: Bot },
+    { to: '/chat', label: 'Aurelius Intelligence', icon: Bot },
     { to: '/about', label: 'About' },
     { to: '/contact', label: 'Contact' },
   ];

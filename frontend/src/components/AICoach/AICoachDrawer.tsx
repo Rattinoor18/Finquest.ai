@@ -76,7 +76,7 @@ export const AICoachDrawer: React.FC<AICoachProps> = ({
             <Bot className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="font-bold text-sm">Coach Aurelius AI</h3>
+            <h3 className="font-bold text-sm">Coach Aurelius Intelligence</h3>
             <span className="text-[10px] text-white/80 font-mono">Behavioral Risk Mentor</span>
           </div>
         </div>

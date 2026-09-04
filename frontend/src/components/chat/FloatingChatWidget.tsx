@@ -84,7 +84,7 @@ export const FloatingChatWidget: React.FC = () => {
           aria-label="Open Aurelius Intelligence AI Assistant"
         >
           <Bot className="w-5 h-5 animate-pulse" />
-          <span className="hidden sm:inline">Ask Aurelius AI</span>
+          <span className="hidden sm:inline">Ask Aurelius Intelligence</span>
         </button>
       )}
 

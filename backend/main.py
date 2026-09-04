@@ -2,8 +2,9 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
-import uvicorn
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 from models import StockQuote, OrderRequest, PortfolioSummary, TradeRecord, BehavioralRiskAssessment
 from simulation import market_engine

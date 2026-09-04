@@ -80,9 +80,9 @@ async def generate_aurelius_reply(user_message: str, chat_history: list = None) 
             "note": "Running in offline mentor mode. Set GEMINI_API_KEY in backend/.env for live Gemini intelligence."
         }
 
-    # Call official Gemini REST API (gemini-3.5-flash)
-    primary_model = "gemini-3.5-flash"
-    fallback_model = "gemini-3.6-flash"
+    # Call official Gemini REST API
+    primary_model = os.getenv("AI_MODEL", "gemini-3.6-flash")
+    fallback_model = "gemini-3.7-flash"
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{primary_model}:generateContent?key={api_key}"
     
     contents = []
